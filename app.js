@@ -10,7 +10,8 @@ app.get('/', (req, res) => {
     res.send('Welcome to left Overs');
 })
 
-app.use("/users", users)
+app.use("/users", users);
+//app.use("inventory", inventory);
 
 app.get("*", (req, res) => {
     res.status(404).json({error: "Not Found!"});
