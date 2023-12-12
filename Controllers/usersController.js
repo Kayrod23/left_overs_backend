@@ -17,9 +17,7 @@ users.get("/:id", async (req, res) => {
     const { id } = req.params;
     console.log(id)
     const user = await prisma.users.findFirst({
-        where: {
-            id: parseInt(id),
-        },
+        where: { id: parseInt(id) },
     });
     // console.log(user);
     if (user) {
@@ -70,9 +68,7 @@ users.delete("/:id", async (req, res) => {
     const { id } = req.params;
     try {
         const deletedUser = await prisma.users.delete({
-            where: {
-                id: parseInt(id),
-            }
+            where: { id: parseInt(id) }
         })
         res.status(200).json(deletedUser);
     } catch (error) {

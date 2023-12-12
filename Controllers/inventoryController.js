@@ -12,7 +12,7 @@ inventory.get("/", async (req, res) => {
     }
 })
 
-inventory.get("/", async (req, res) => {
+inventory.get("/:id", async (req, res) => {
     const { id } = req.params;
     const item = await prisma.inventory.findFirst({
         where: {
@@ -37,6 +37,40 @@ inventory.post("/", async (req, res) => {
         res.status(200).json(newItem);
     } catch (error) {
         res.status(400).json({ error: error});
+    }
+})
+
+inventory.put("/:id", async (req, res) => {
+    const { id } = req.params;
+    try {
+        const isItem = await prisma.inventory.findUnique({
+            where: { id: parseInt(id) },
+        })
+        if (!isItem) {
+            console.log("Item Not Found!");
+            return;
+        }
+        const updateItem = await prisma.inventory.update({
+            where: { id: parseInt(id) },
+            data: {
+                item: req.body.item,
+            }
+        });
+        res.status(200).json(updateItem);
+    } catch (error) {
+        res.status(400).json({ error: error});
+    }
+})
+
+inventory.delete("/:id", async (req, res) => {
+    const { id } = req.params;
+    try {
+        const deltedItem = await prisma.inventory.delete({
+            where: { id: parseInt(id) }
+        });
+        res.status(200).json(deltedItem);
+    } catch (error) {
+        res.status(400).json({ error: error });
     }
 })
 
