@@ -21,7 +21,7 @@ users.get("/:id", async (req, res) => {
             id: parseInt(id),
         },
     });
-    console.log(user);
+    // console.log(user);
     if (user) {
         res.status(200).json(user);
     } else {
