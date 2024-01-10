@@ -65,10 +65,10 @@ inventory.put("/:id", async (req, res) => {
 inventory.delete("/:id", async (req, res) => {
     const { id } = req.params;
     try {
-        const deltedItem = await prisma.inventory.delete({
+        const deletedItem = await prisma.inventory.delete({
             where: { id: parseInt(id) }
         });
-        res.status(200).json(deltedItem);
+        res.status(200).json(deletedItem);
     } catch (error) {
         res.status(400).json({ error: error });
     }

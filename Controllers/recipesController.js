@@ -64,4 +64,16 @@ recipe.put("/:id", async (req, res) => {
     }
 })
 
+recipe.delete("/id", async (req, res) => {
+    const { id } = req.params;
+    try {
+        const deletedRecipe = await prisma.recipes.delete({
+            where: { id: parseInt(id) }
+        });
+        res.status(200).json(deletedRecipe);
+    } catch (error) {
+        res.status(400).json({ error: error });
+    }
+})
+
 module.exports = recipe;
