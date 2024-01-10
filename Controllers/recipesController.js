@@ -26,3 +26,19 @@ recipe.get("/:id", async (req, res) => {
     }
 })
 
+recipe.get("/", async (req, res) => {
+    try {
+        const newRecipe = await prisma.recipe.create({
+            data : {
+                recipeName: req.body.item,
+                recipeSteps: req.body.item,
+                userId: req.body.userId,
+            }
+        })
+        res.status(200).json(newRecipe);
+    } catch (error) {
+        res.status(400).json({ error: error });
+    }
+}) 
+
+module.exports = recipe;
