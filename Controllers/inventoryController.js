@@ -58,7 +58,7 @@ inventory.put("/:id", async (req, res) => {
         });
         res.status(200).json(updateItem);
     } catch (error) {
-        res.status(400).json({ error: error});
+        res.status(400).json({ error: error });
     }
 })
 

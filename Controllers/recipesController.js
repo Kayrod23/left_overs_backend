@@ -4,7 +4,7 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 recipe.get("/", async (req, res) => {
-    const allRecipes = await prisma.recipe.findMany();
+    const allRecipes = await prisma.recipes.findMany();
     if (allRecipes) {
         res.status(200).json(allRecipes);
     } else {
@@ -14,7 +14,7 @@ recipe.get("/", async (req, res) => {
 
 recipe.get("/:id", async (req, res) => {
     const { id } = req.params;
-    const recipe = await prisma.recipe.findFirst({
+    const recipe = await prisma.recipes.findFirst({
         where: {
             id: parseInt(id),
         }
@@ -26,9 +26,9 @@ recipe.get("/:id", async (req, res) => {
     }
 })
 
-recipe.get("/", async (req, res) => {
+recipe.post("/", async (req, res) => {
     try {
-        const newRecipe = await prisma.recipe.create({
+        const newRecipe = await prisma.recipes.create({
             data : {
                 recipeName: req.body.item,
                 recipeSteps: req.body.item,
@@ -40,5 +40,28 @@ recipe.get("/", async (req, res) => {
         res.status(400).json({ error: error });
     }
 }) 
+
+recipe.put("/:id", async (req, res) => {
+    const { id } = req.params;
+    try {
+        const isRecipe = await prisma.recipes.findUnique({
+            where: { id: parseInt(id) },
+        })
+        if (!isRecipe) {
+            console.log("Recipe Not Found!");
+            return;
+        }
+        const updateRecipe = await prisma.recipes.update({
+            where: { id: parseInt(id) },
+            data: {
+                recipeName: req.body.item,
+                recipeSteps: req.body.item,
+            }
+        })
+        res.status(200).json(updateRecipe);
+    } catch (error) {
+        res.status(400).json({ error: error });
+    }
+})
 
 module.exports = recipe;
