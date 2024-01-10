@@ -8,7 +8,7 @@ inventory.get("/", async (req, res) => {
     if (fullInventory[0]) {
         res.status(200).json(fullInventory);
     } else {
-        res.status(500).json({ error: "Empty Inventory"})
+        res.status(500).json({ error: "Empty Inventory" })
     }
 })
 
@@ -22,7 +22,7 @@ inventory.get("/:id", async (req, res) => {
     if (item) {
         res.status(200).status(item);
     } else {
-        res.status(500).json({ error: "User Not Found!"})
+        res.status(500).json({ error: "User Not Found!" })
     }
 })
 
