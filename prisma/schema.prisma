@@ -30,5 +30,5 @@ model Recipes {
   recipeName  String
   recipeSteps String
   user        Users? @relation(fields: [userId], references: [id] )
-  userId      Int
+  userId      Int?
 }

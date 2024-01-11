@@ -4,16 +4,11 @@ const prisma = new PrismaClient();
 // Test Seed data for Users
 async function users() {
     const test = await prisma.users.upsert({
-        where: { email: 'test@gamil.com' },
+        where: { email: 'test@gmail.com' },
         update: {},
         create: {
-            email: 'test@gamil.com',
+            email: 'test@gmail.com',
             name: 'Test',
-            userInventory: {
-                create: {
-                    item: 'testItem',
-                }
-            },
         },
     })
     console.log({ test });
@@ -32,16 +27,10 @@ users()
 
 async function items() {
     const test = await prisma.inventory.upsert({
-        where: { email: 'test@gamil.com' },
+        where: { id: 2 },
         update: {},
         create: {
-            email: 'test@gamil.com',
-            name: 'Test',
-            userInventory: {
-                create: {
-                    item: 'testItem',
-                }
-            },
+            item: 'testItem',
         },
     })
     console.log({ test });
@@ -57,3 +46,24 @@ items()
     process.exit(1);
 })
 
+async function recipes() {
+    const test = await prisma.recipes.upsert({
+        where: { id: 2},
+        update: {},
+        create: {
+            recipeName: 'tomato',
+            recipeSteps: 'move'
+        }
+    })
+    console.log({ test });
+}
+
+recipes()
+.then(async () => {
+    await prisma.$disconnect()
+})
+.catch(async (e) => {
+    console.log(e);
+    await prisma.$disconnect();
+    process.exit(1);
+})
