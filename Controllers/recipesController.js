@@ -8,7 +8,7 @@ recipe.get("/", async (req, res) => {
     if (allRecipes) {
         res.status(200).json(allRecipes);
     } else {
-        res.status(500).json({ error : "Empty Recipe "})
+        res.status(500).json({ error : "Empty Recipe"})
     }
 })
 
@@ -30,8 +30,8 @@ recipe.post("/", async (req, res) => {
     try {
         const newRecipe = await prisma.recipes.create({
             data : {
-                recipeName: req.body.item,
-                recipeSteps: req.body.item,
+                recipeName: req.body.recipeName,
+                recipeSteps: req.body.recipeSteps,
                 userId: req.body.userId,
             }
         })
@@ -54,8 +54,11 @@ recipe.put("/:id", async (req, res) => {
         const updateRecipe = await prisma.recipes.update({
             where: { id: parseInt(id) },
             data: {
-                recipeName: req.body.item,
-                recipeSteps: req.body.item,
+                recipeName: req.body.recipeName,
+                recipeSteps: req.body.recipeSteps,
+                userId: req.body.userId,
+                rating: req.body.rating,
+                comment: req.body.rating
             }
         })
         res.status(200).json(updateRecipe);
@@ -65,8 +68,15 @@ recipe.put("/:id", async (req, res) => {
 })
 
 recipe.delete("/id", async (req, res) => {
-    const { id } = req.params;
     try {
+        const { id } = req.params;
+        const isRecipe = await prisma.recipes.findUnique({
+            where: { id: parseInt(id) },
+        })
+        if (!isRecipe) {
+            console.log("Recipe Not Found!");
+            return;
+        }
         const deletedRecipe = await prisma.recipes.delete({
             where: { id: parseInt(id) }
         });

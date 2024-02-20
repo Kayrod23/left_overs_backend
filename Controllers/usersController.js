@@ -13,19 +13,30 @@ users.get("/", async (req, res) => {
     }
 })
 
-users.get("/:id", async (req, res) => {
-    const { id } = req.params;
-    console.log(id)
+users.get("/:email", async (req, res) => {
+    const { email } = req.params;
     const user = await prisma.users.findFirst({
-        where: { id: parseInt(id) },
-    });
-    // console.log(user);
+        where: { email: email},
+    })
     if (user) {
         res.status(200).json(user);
     } else {
         res.status(500).json({ error: "User Not Found!"})
     }
 })
+// try and combine both into one
+// users.get("/:id", async (req, res) => {
+//     const { id } = req.params;
+//     console.log(id)
+//     const user = await prisma.users.findFirst({
+//         where: { id: parseInt(id) },
+//     });
+//     if (user) {
+//         res.status(200).json(user);
+//     } else {
+//         res.status(500).json({ error: "User Not Found!"})
+//     }
+// })
 
 users.post("/", async (req, res) => {
     try {
@@ -33,7 +44,9 @@ users.post("/", async (req, res) => {
             data: {
                 name: req.body.name,
                 email: req.body.email,
-            }
+                picture: req.body.picture
+            },
+
         });
         res.status(200).json(newUser);
     } catch (error) {
@@ -42,8 +55,8 @@ users.post("/", async (req, res) => {
 })
 
 users.put("/:id", async (req, res) => {
-    const { id } = req.params;
     try {
+        const { id } = req.params;
         const isUser = await prisma.users.findUnique({
             where: { id: parseInt(id) },
         })
