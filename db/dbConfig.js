@@ -9,10 +9,10 @@ const cn = DATABASE_URL
     max: 30,
 }
 : {
-    host: process.env.PG_HOST || "localhost",
-    port: process.env.PG_PORT,
-    database: process.env.PG_DATABASE,
-    user: process.env.PG_USER,
+    host: process.env.RDS_HOSTNAME || "localhost",
+    password: process.env.RDS_PASSWORD,
+    user: process.env.RDS_USERNAME,
+    port: process.env.RDS_PORT,
 };
 
 const db = pgp(cn);
