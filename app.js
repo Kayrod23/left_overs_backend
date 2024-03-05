@@ -9,7 +9,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/', (req, res) => {
-    res.send('Welcome to left Overs');
+    res.send('Welcome to left Overs Backend');
 })
 
 app.use("/users", users);
