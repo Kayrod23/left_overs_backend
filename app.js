@@ -20,7 +20,7 @@ app.get("*", (req, res) => {
     res.status(404).json({error: "Not Found!"});
 });
 
-var mysql = require('pg');
+var pg = require('pg');
 
 var connection = pg.createConnection({
   host     : process.env.RDS_HOSTNAME,
