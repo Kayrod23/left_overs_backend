@@ -10,8 +10,8 @@ const cn = DATABASE_URL
 }
 : {
     host: process.env.RDS_HOSTNAME || "localhost",
-    password: process.env.RDS_PASSWORD,
     user: process.env.RDS_USERNAME,
+    password: process.env.RDS_PASSWORD,
     port: process.env.RDS_PORT,
 };
 
