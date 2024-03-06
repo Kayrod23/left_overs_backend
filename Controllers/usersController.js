@@ -9,7 +9,7 @@ users.get("/", async (req, res) => {
     if (allUsers[0]) {
         res.status(200).json(allUsers);
     } else {
-        res.status(500).json({ error: "Server Error"})
+        res.status(500).json({ error: "Server Error!"})
     }
 })
 
